@@ -3,6 +3,10 @@ version: "3.7"
 networks:
   frontend:
   backend:
+  traefik_proxy:
+    external:
+      name: traefik_proxy
+
 
 volumes:
   pgdata:
@@ -61,6 +65,7 @@ services:
       - web
     networks:
       - frontend
+      - traefik_proxy
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik_proxy
