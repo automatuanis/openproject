@@ -61,13 +61,6 @@ services:
       - web
     networks:
       - frontend
-
-  web:
-    <<: *app
-    command: "./docker/web"
-    networks:
-      - frontend
-      - backend
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik_proxy
@@ -79,8 +72,15 @@ services:
       - traefik.http.routers.project-https.rule=Host(`project.automatuanis.com`)
       - traefik.http.routers.project-https.entrypoints=https
       - traefik.http.routers.project-https.tls.certresolver=myhttpchallenge
-      - traefik.http.services.web.loadbalancer.server.port=8080
+      - traefik.http.services.proxy.loadbalancer.server.port=8080
 
+
+  web:
+    <<: *app
+    command: "./docker/web"
+    networks:
+      - frontend
+      - backend
 
   worker:
     <<: *app
