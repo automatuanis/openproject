@@ -69,6 +69,18 @@ services:
     networks:
       - frontend
       - backend
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+
+      - traefik.http.routers.project-http.rule=Host(`project.automatuanis.com`)
+      - traefik.http.routers.project-http.entrypoints=http
+      - traefik.http.routers.project-http.middlewares=redirect
+
+      - traefik.http.routers.project-https.rule=Host(`project.automatuanis.com`)
+      - traefik.http.routers.project-https.entrypoints=https
+      - traefik.http.routers.project-https.tls.certresolver=myhttpchallenge
+
 
   worker:
     <<: *app
