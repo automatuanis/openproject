@@ -65,6 +65,14 @@ services:
       - web
     networks:
       - frontend
+
+
+  web:
+    <<: *app
+    command: "./docker/web"
+    networks:
+      - frontend
+      - backend
       - traefik_proxy
     labels:
       - traefik.enable=true
@@ -78,14 +86,6 @@ services:
       - traefik.http.routers.project-https.entrypoints=https
       - traefik.http.routers.project-https.tls.certresolver=myhttpchallenge
       - traefik.http.services.proxy.loadbalancer.server.port=8080
-
-
-  web:
-    <<: *app
-    command: "./docker/web"
-    networks:
-      - frontend
-      - backend
 
   worker:
     <<: *app
