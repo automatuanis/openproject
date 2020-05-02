@@ -79,6 +79,7 @@ services:
       - traefik.http.routers.project-https.rule=Host(`project.automatuanis.com`)
       - traefik.http.routers.project-https.entrypoints=https
       - traefik.http.routers.project-https.tls.certresolver=myhttpchallenge
+      - traefik.http.services.web.loadbalancer.server.port=8080
 
 
   worker:
